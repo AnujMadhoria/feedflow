@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 text-white p-10">
+        <div class="w-full flex justify-end">
+            <a class="text-red-500 inline-block" href="/logout">log out</a>
+        </div>
+        <div class="flex items-start gap-3">
+            <!-- <div class="w-10 h-10 rounded-md">
+                <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profilepic %>" alt="">
+            </div> -->
+            <h3 class="text-3xl mb-5"><span class="font-light">Hi , </span><%= user.name %>😁</h3>
+        </div>
+        
+        <h5 class="mb-5" >you can create a new post</h5>
+        <form method="post" action="/post">
+            <textarea class="block p-3 outline-none w-1/3 resize-none bg-transparent border-2 border-zinc-800" placeholder="what's on your mind ?" name="content" id=""></textarea>
+            <input class="text-sm px-3 py-2 bg-blue-500 block mt-2 w-40" type="submit" value="create new post" id="">
+        </form>
+
+        <div class="posts mt-20">
+            <h3 class="texr-zinc-400">Your posts</h3>
+            <div class="postcontainer mt-5">
+                <% user.posts.reverse().forEach(function(post){%>
+                    <div class="post w-1/3 p-4 border-2 border-zinc-700 bg-zinc-800 mb-4">
+                        <div class="flex justify-between ">
+                            <h4 class="text-blue-500 mb-2">@<%=user.username %></h4>
+                            <a class="text-zinc-600" href="/edit/<%= post._id %>">edit</a>
+                        </div>
+                       
+                        <p class="text-sm tracking-tight"> <%= post.content %> </p>
+                        <small class="inline-block" > <% if (post.likes.length==1) { %>
+                            <%=post.likes.length%>❤️
+                          <% } else { %>
+                            <%=post.likes.length%>👎
+                          <% } %> </small>
+                        <div class="btns flex justify-between mt-3">
+                            <a class="text-blue-500" href="/like/<%= post._id %>">
+                                <%= post.likes.indexOf(user._id)===-1 ? "like" : "unlike" %>
+                            </a>
+                            
+                            <a class="text-zinc-600" href="/delete/<%= post._id %>">delete</a>
+                        </div>
+                    </div>    
+                    
+                <% }) %> 
+
+            </div>
+            
+        </div>
+
+    </div>
+    
+</body>
+</html>
