@@ -131,5 +131,7 @@ function isLoggedIn(req,res,next){ //middleware for protected routes (logged in 
     
 }
 
-
-app.listen(3000);  
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
